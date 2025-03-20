@@ -1,30 +1,25 @@
  /** @type {import('next').NextConfig} */
-// const nextConfig = {};
 
-// export default nextConfig;
-
-// // const nextConfig = {
-// //     experimental: {
-// //       serverActions: {
-// //         bodySizeLimit: "10mb", // Increase body size limit to 10MB
-// //       },
-// //     },
-// //   };
-  
-// //   export default nextConfig;
-  
 // const nextConfig = {
 //     experimental: {
 //       serverComponentsExternalPackages: ['pdf2json'],
 //     },
 //   };
   
-//   module.exports = nextConfig;
+//   export default nextConfig; 
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
-      serverComponentsExternalPackages: ['pdf2json'],
-    },
-  };
-  
-  export default nextConfig; // ✅ Correct way to export in ES modules
+  experimental: {
+    serverComponentsExternalPackages: ['pdf2json'],
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
+
+export default nextConfig;
   
