@@ -7,6 +7,7 @@ export const maxDuration = 60;
 export async function POST(req: Request) {
   const { files } = await req.json();
   const firstFile = files[0].data;
+  console.log(`are bro the dat ais ${firstFile}`)
 
   const result = streamObject({
     model: google("gemini-1.5-pro-latest"),
