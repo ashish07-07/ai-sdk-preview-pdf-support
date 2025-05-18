@@ -28,14 +28,14 @@ export async function POST(req: NextRequest) {
     const tempDir = '/tmp';
     tempFilePath = path.join(tempDir, `${fileName}.pdf`);
     
-    // Convert File to Buffer and write to temp
+
     const fileBuffer = Buffer.from(await uploadedFile.arrayBuffer());
     await fs.writeFile(tempFilePath, fileBuffer);
 
-    // Parse PDF
+   
     const parsedText = await parsePDF(tempFilePath);
 
-    // Save to database
+
     const document = await prisma.document.create({
       data: {
         content: parsedText,
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// PDF parsing function
+
 async function parsePDF(filePath: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const pdfParser = new (PDFParser as any)(null, 1);
