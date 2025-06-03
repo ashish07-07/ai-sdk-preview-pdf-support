@@ -22,12 +22,12 @@ export default function QuizGame() {
   const [loading, setLoading] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   
-  // For flashcards
+
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [isFlipping, setIsFlipping] = useState(false);
   
-  // For matching game
+
   const [matchedPairs, setMatchedPairs] = useState<{[key: number]: number}>({});
   const [selectedTerm, setSelectedTerm] = useState<number | null>(null);
   const [selectedDefinition, setSelectedDefinition] = useState<number | null>(null);
@@ -37,7 +37,7 @@ export default function QuizGame() {
 
   async function fileselect(val: string) {
     setCurrentfile(val);
-    // Reset game state when selecting a new file
+   
     setQuizData(null);
     setGameStarted(false);
     setFlashcards([]);
@@ -45,7 +45,7 @@ export default function QuizGame() {
 
   async function handleradiochange(e: any) {
     setFormat(e.target.value);
-    // Reset game state when changing format
+    
     setQuizData(null);
     setGameStarted(false);
     setFlashcards([]);
@@ -62,7 +62,7 @@ export default function QuizGame() {
       if (format === 'matching') {
         const matchingData = response.data.matching || { terms: [], definitions: [] };
         setQuizData(matchingData);
-        // Shuffle definitions for matching game
+      
         const shuffled = [...(matchingData.definitions || [])];
         for (let i = shuffled.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -70,7 +70,7 @@ export default function QuizGame() {
         }
         setShuffledDefinitions(shuffled);
       } else {
-        // For flashcards - the response.data.flashcards is already an array of flashcards
+       
         console.log("Flashcards data:", response.data.flashcards);
         if (Array.isArray(response.data.flashcards)) {
           setFlashcards(response.data.flashcards);
@@ -80,7 +80,7 @@ export default function QuizGame() {
         }
       }
       
-      // Reset game state
+    
       setCurrentCardIndex(0);
       setShowAnswer(false);
       setMatchedPairs({});
@@ -107,9 +107,9 @@ export default function QuizGame() {
     setSelectedTerm(index);
     setIncorrectMatch(false);
     
-    // If a definition is already selected, check if it's a match
+    
     if (selectedDefinition !== null) {
-      // Need to find the original index of the definition in the shuffled array
+     
       const definitionIndex = shuffledDefinitions.findIndex(
         def => def === quizData.definitions[index]
       );
@@ -118,7 +118,7 @@ export default function QuizGame() {
         // It's a match!
         setMatchedPairs({...matchedPairs, [index]: selectedDefinition});
       } else {
-        // Not a match - show red highlight
+        
         setIncorrectMatch(true);
       }
       
@@ -136,7 +136,7 @@ export default function QuizGame() {
       return;
     }
 
-    // Check if this definition is already matched
+    
     if (Object.values(matchedPairs).includes(index)) {
       return;
     }
@@ -144,22 +144,22 @@ export default function QuizGame() {
     setSelectedDefinition(index);
     setIncorrectMatch(false);
     
-    // If a term is already selected, check if it's a match
+
     if (selectedTerm !== null) {
-      // Need to find the original index of the definition in the shuffled array
+     
       const definitionIndex = shuffledDefinitions.findIndex(
         def => def === quizData.definitions[selectedTerm]
       );
       
       if (index === definitionIndex) {
-        // It's a match!
+     
         setMatchedPairs({...matchedPairs, [selectedTerm]: index});
       } else {
-        // Not a match - show red highlight
+      
         setIncorrectMatch(true);
       }
       
-      // Reset selections after a short delay
+     
       setTimeout(() => {
         setSelectedTerm(null);
         setSelectedDefinition(null);
